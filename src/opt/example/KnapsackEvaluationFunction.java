@@ -9,7 +9,7 @@ import shared.Instance;
  * @author Andrew Guillory gtg008g@mail.gatech.edu
  * @version 1.0
  */
-public class KnapsackEvaluationFunction implements EvaluationFunction {
+public class KnapsackEvaluationFunction implements EvaluationFunction, CountsEvals {
     
     /**
      * The values for the things that can be put in the knapsack
@@ -30,6 +30,8 @@ public class KnapsackEvaluationFunction implements EvaluationFunction {
      * The weight of all the items
      */
     private double allItemsWeight;
+
+    private long evaluations;
     
     /**
      * Make a new knapsack evaluation function
@@ -50,10 +52,23 @@ public class KnapsackEvaluationFunction implements EvaluationFunction {
         }
     }
 
-    /**
-     * Find the value of the knapsack with the given items.
-     */
+    public long getEvals() {
+        return evaluations;
+    }
+
+    public void resetEvals() {
+        evaluations = 0;
+    }
+
     public double value(Instance d) {
+        evaluations++;
+        return _value(d);
+    }
+
+    /**
+     * @see opt.EvaluationFunction#value(opt.OptimizationData)
+     */
+    public double _value(Instance d) {
         Vector entriesInKnapsack = d.getData();
         double weight = 0;
         double value = 0;

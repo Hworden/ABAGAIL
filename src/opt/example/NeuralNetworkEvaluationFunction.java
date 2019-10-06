@@ -12,7 +12,7 @@ import shared.Instance;
  * @author Andrew Guillory gtg008g@mail.gatech.edu
  * @version 1.0
  */
-public class NeuralNetworkEvaluationFunction implements EvaluationFunction {
+public class NeuralNetworkEvaluationFunction implements EvaluationFunction, CountsEvals {
     /**
      * The network
      */
@@ -25,6 +25,8 @@ public class NeuralNetworkEvaluationFunction implements EvaluationFunction {
      * The error measure
      */
     private ErrorMeasure measure;
+
+    private long evaluations;
     
     /**
      * Make a new neural network evaluation function
@@ -39,10 +41,23 @@ public class NeuralNetworkEvaluationFunction implements EvaluationFunction {
         this.measure = measure;
     }
 
-    /**
-     * @see opt.OptimizationProblem#value(opt.OptimizationData)
-     */
+    public long getEvals() {
+        return evaluations;
+    }
+
+    public void resetEvals() {
+        evaluations = 0;
+    }
+
     public double value(Instance d) {
+        evaluations++;
+        return _value(d);
+    }
+
+    /**
+     * @see opt.EvaluationFunction#value(opt.OptimizationData)
+     */
+    public double _value(Instance d) {
         // set the links
         Vector weights = d.getData();
         network.setWeights(weights);

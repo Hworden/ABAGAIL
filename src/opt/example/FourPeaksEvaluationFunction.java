@@ -9,11 +9,12 @@ import shared.Instance;
  * @author Andrew Guillory gtg008g@mail.gatech.edu
  * @version 1.0
  */
-public class FourPeaksEvaluationFunction implements EvaluationFunction {
+public class FourPeaksEvaluationFunction implements EvaluationFunction, CountsEvals {
     /**
      * The t value
      */
     private int t;
+    private long evaluations;
     
     /**
      * Make a new four peaks function
@@ -23,10 +24,23 @@ public class FourPeaksEvaluationFunction implements EvaluationFunction {
         this.t = t;
     }
 
+    public long getEvals() {
+        return evaluations;
+    }
+
+    public void resetEvals() {
+        evaluations = 0;
+    }
+
+    public double value(Instance d) {
+        evaluations++;
+        return _value(d);
+    }
+
     /**
      * @see opt.EvaluationFunction#value(opt.OptimizationData)
      */
-    public double value(Instance d) {
+    public double _value(Instance d) {
         Vector data = d.getData();
         int i = 0;
         while (i < data.size() && data.get(i) == 1) {

@@ -9,12 +9,27 @@ import shared.Instance;
  * @author Daniel Cohen dcohen@gatech.edu
  * @version 1.0
  */
-public class TwoColorsEvaluationFunction implements EvaluationFunction {
+public class TwoColorsEvaluationFunction implements EvaluationFunction, CountsEvals {
+
+    public long evaluations;
+
+    public long getEvals() {
+        return evaluations;
+    }
+
+    public void resetEvals() {
+        evaluations = 0;
+    }
+
+    public double value(Instance d) {
+        evaluations++;
+        return _value(d);
+    }
 
     /**
      * @see opt.EvaluationFunction#value(opt.OptimizationData)
      */
-    public double value(Instance d) {
+    public double _value(Instance d) {
         Vector data = d.getData();
         double val = 0;
         for (int i = 1; i < data.size() - 1; i++) {

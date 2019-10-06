@@ -10,7 +10,7 @@ import shared.Instance;
  * @author Andrew Guillory gtg008g@mail.gatech.edu
  * @version 1.0
  */
-public class TravelingSalesmanRouteEvaluationFunction extends TravelingSalesmanEvaluationFunction {
+public class TravelingSalesmanRouteEvaluationFunction extends TravelingSalesmanEvaluationFunction implements CountsEvals {
 
     /**
      * Make a new route evaluation function
@@ -20,10 +20,25 @@ public class TravelingSalesmanRouteEvaluationFunction extends TravelingSalesmanE
         super(points);
     }
 
+    private long evaluations;
+
+    public long getEvals() {
+        return evaluations;
+    }
+
+    public void resetEvals() {
+        evaluations = 0;
+    }
+
+    public double value(Instance d) {
+        evaluations++;
+        return _value(d);
+    }
+
     /**
      * @see opt.EvaluationFunction#value(opt.OptimizationData)
      */
-    public double value(Instance d) {
+    public double _value(Instance d) {
         double distance = 0;
         for (int i = 0; i < d.size() - 1; i++) {
             distance += getDistance(d.getDiscrete(i), d.getDiscrete(i+1));

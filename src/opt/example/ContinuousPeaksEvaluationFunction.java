@@ -9,12 +9,12 @@ import shared.Instance;
  * @author Andrew Guillory gtg008g@mail.gatech.edu
  * @version 1.0
  */
-public class ContinuousPeaksEvaluationFunction implements EvaluationFunction {
+public class ContinuousPeaksEvaluationFunction implements EvaluationFunction, CountsEvals {
     /**
      * The t value
      */
     private int t;
-    
+    public long evaluations = 0;
     /**
      * Make a new continuous peaks function
      * @param t the t value
@@ -23,10 +23,23 @@ public class ContinuousPeaksEvaluationFunction implements EvaluationFunction {
         this.t = t;
     }
 
+    public long getEvals() {
+        return evaluations;
+    }
+
+    public void resetEvals() {
+        evaluations = 0;
+    }
+
+    public double value(Instance d) {
+        evaluations++;
+        return _value(d);
+    }
+
     /**
      * @see opt.EvaluationFunction#value(opt.OptimizationData)
      */
-    public double value(Instance d) {
+    public double _value(Instance d) {
         Vector data = d.getData();
         int max0 = 0;
         int count = 0;
@@ -52,4 +65,5 @@ public class ContinuousPeaksEvaluationFunction implements EvaluationFunction {
         }
         return Math.max(max1, max0) + r;
     }
+
 }

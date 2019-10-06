@@ -10,7 +10,7 @@ import util.ABAGAILArrays;
  * @author Andrew Guillory gtg008g@mail.gatech.edu
  * @version 1.0
  */
-public class TravelingSalesmanSortEvaluationFunction extends TravelingSalesmanEvaluationFunction {
+public class TravelingSalesmanSortEvaluationFunction extends TravelingSalesmanEvaluationFunction implements CountsEvals {
 
     /**
      * Make a new traveling salesman evaluation function
@@ -20,10 +20,25 @@ public class TravelingSalesmanSortEvaluationFunction extends TravelingSalesmanEv
         super(points);
     }
 
+    private long evaluations;
+
+    public long getEvals() {
+        return evaluations;
+    }
+
+    public void resetEvals() {
+        evaluations = 0;
+    }
+
+    public double value(Instance d) {
+        evaluations++;
+        return _value(d);
+    }
+
     /**
      * @see opt.EvaluationFunction#value(opt.OptimizationData)
      */
-    public double value(Instance d) {
+    public double _value(Instance d) {
         double[] ddata = new double[d.size()];
         for (int i = 0; i < ddata.length; i++) {
             ddata[i] = d.getContinuous(i);
