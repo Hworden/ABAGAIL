@@ -22,7 +22,7 @@ import func.nn.NeuralNetwork;
  * @author Andrew Guillory gtg008g@mail.gatech.edu
  * @version 1.0
  */
-public class NeuralNetworkOptimizationProblem implements HillClimbingProblem, GeneticAlgorithmProblem {
+public class NeuralNetworkOptimizationProblem implements HillClimbingProblem, GeneticAlgorithmProblem, EvaluationFunction {
 
     /**
      * The evaluation function
